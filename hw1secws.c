@@ -57,8 +57,8 @@ static void destroy_hooks(int max)
     size_t i;   /* for loop's index */
     for (i = 0; i < max; i++)
     {
-        nf_unregister_net_hook(&init_net, hooks + sizeof(nf_hook_ops) * i);
-        kfree(hooks[i]);
+        nf_unregister_net_hook(&init_net, &hooks[i]);
+        kfree(&hooks[i]);
     }
 }
 
@@ -89,7 +89,7 @@ static int __init LKM_init(void)
                 hook[i]->hooknum = NF_IP_LOCAL_OUT; /* The only hook point left possible */
             }
         }
-        ERR_CHECK(int err = (nf_register_net_hook(&init_net, hook[i]) < 0), destroy_hooks(i), "nf_register_net_hook", err);
+        ERR_CHECK(int err = (nf_register_net_hook(&init_net, &hook[i]) < 0), destroy_hooks(i), "nf_register_net_hook", err);
     }
 }
 
