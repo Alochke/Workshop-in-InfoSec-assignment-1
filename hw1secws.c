@@ -63,7 +63,7 @@ static void destroy_hooks(int max)
     for (i = 0; i < max; i++)
     {
         nf_unregister_net_hook(&init_net, hooks + (i * sizeof(struct nf_hook_ops)));
-        printk("%d suecceded", i)
+        printk("%d suecceded", i);
     }
     kfree(hooks);
 }
