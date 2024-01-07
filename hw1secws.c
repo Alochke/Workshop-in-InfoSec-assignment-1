@@ -70,8 +70,8 @@ static int __init LKM_init(void)
 
     for(i = 0; i < HOOKS_NUM; i++)
     {
-        hooks[i]->pf = PF_INET;                      /* IPv4 */
-        hooks[i]->priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
+        hooks[i].pf = PF_INET;                      /* IPv4 */
+        hooks[i].priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
         switch (i)                                  /* Netfilter hook point and hook function */
         {
         case FORWARD:
