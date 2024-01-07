@@ -9,6 +9,8 @@
     Those we create three diffrent hooks, first two are hooked into NF_IP_LOCAL_IN and NF_IP_LOCAL_OUT, handling allowed packets, and the third is hooked into NF_IP_FORWARD handling the blocked ones.
 */
 
+#undef __KERNEL__
+
 #include <linux/kernel.h>   /* We're doing kernel work */
 #include <linux/module.h>   /* Specifically, a module */
 #include <linux/slab.h>     /* For kmaloc and kfree */
