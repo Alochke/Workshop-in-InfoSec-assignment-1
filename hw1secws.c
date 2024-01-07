@@ -35,7 +35,7 @@
 MODULE_LICENSE("GPL");
 
 /* All nf_hook_ops will be pointed by the hooks array */
-static struct nf_hook_ops hooks[HOOKS_NUM];
+static struct nf_hook_ops hooks[];
 
 /* The dropped packet handling procedure */
 static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
@@ -51,24 +51,24 @@ static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf
     return NF_ACCEPT;
 }
 
-/* Deletes hook with index less than max from existance */
+/* Deletes hook with index less than max from existance and frees kernel's allocated memory. */
 static void destroy_hooks(int max)
 {
     size_t i;   /* for loop's index */
     for (i = 0; i < max; i++)
     {
-        nf_unregister_net_hook(&init_net, &hooks[i]);
-        kfree(&hooks[i]);
+        nf_unregister_net_hook(&init_net, hooks + i * sizeof(struct nf_hook_ops));
     }
+    kfree(hooks);
 }
 
 static int __init LKM_init(void)
 {
+    ERR_CHECK(hooks = (struct nf_hook_ops*) kmalloc(3 ,sizeof(struct nf_hook_ops), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
     size_t i;   /* for loop's index */
 
     for(i = 0; i < HOOKS_NUM; i++)
     {
-        ERR_CHECK(hooks[i] = (struct nf_hook_ops)kmalloc(sizeof(struct nf_hook_ops), GFP_KERNEL), destroy_hooks(i), "kmalloc", -EMVSDYNALC)
         hook[i]->pf = PF_INET;                      /* IPv4 */
         hook[i]->priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
         switch (i)                                  /* Netfilter hook point and hook function */
