@@ -73,6 +73,7 @@ static void destroy_hooks(int max)
 static int __init LKM_init(void)
 {
     size_t i;   /* for loop's index */
+    ine err;
     
     ERR_CHECK((hooks = kmalloc(sizeof(struct nf_hook_ops) * HOOKS_NUM, GFP_KERNEL)) == NULL,, "kmalloc", -ENOMEM)
 
@@ -98,8 +99,7 @@ static int __init LKM_init(void)
             }
         }
 
-        int err = nf_register_net_hook(&init_net, &hooks[i]);
-        ERR_CHECK(err < 0, destroy_hooks(i), "nf_register_net_hook", err);
+        ERR_CHECK((err = nf_register_net_hook(&init_net, &hooks[i])) < 0, destroy_hooks(i), "nf_register_net_hook", err);
     }
 }
 
