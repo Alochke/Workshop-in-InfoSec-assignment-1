@@ -18,7 +18,7 @@
 
 #define ALLOW_MESSAGE "*** Packet Accepted ***"
 #define BLOCK_MESSAGE "*** Packet Dropped ***"
-#define HOOKS_NUM 3 /* The number of nf_hook_ops structs We'll use */
+#define HOOKS_NUM 1 /* The number of nf_hook_ops structs We'll use */
 #define IN 0 /* The index of the NF_IP_LOCAL_IN hook */
 #define OUT 1 /* The index of the NF_IP_LOCAL_OUT hook */
 #define FORWARD 2 /* The index of the NF_IP_LOCAL_FORWARD hook */
@@ -40,7 +40,7 @@
 }
 
 /* All nf_hook_ops will be pointed by the hooks array */
-static struct nf_hook_ops hooks[];
+static struct nf_hook_ops *hooks;
 
 /* The dropped packet handling procedure */
 static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
@@ -62,7 +62,7 @@ static void destroy_hooks(int max)
     size_t i;   /* for loop's index */
     for (i = 0; i < max; i++)
     {
-        nf_unregister_net_hook(&init_net, &hooks[i]);
+        nf_unregister_net_hook(&init_net, &hooks[i]));
         printk("%d suecceded", i);
     }
     kfree(hooks);
