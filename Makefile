@@ -1,5 +1,4 @@
-obj-m += module.o
-LKM-objs += hw1secws.o
+obj-m += hw1secws.c
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
