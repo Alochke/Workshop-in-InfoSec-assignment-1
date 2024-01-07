@@ -26,7 +26,7 @@
 #define ERR_CHECK(condition, extra_code, function, errno_value){\
     if(condition){\
         extra_code;\
-        printk(KERN_ERR funtion " failed.");\
+        printk(KERN_ERR " failed.");\
         return errno_value;\
     }\
 }
