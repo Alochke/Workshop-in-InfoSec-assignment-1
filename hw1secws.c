@@ -75,18 +75,18 @@ static int __init LKM_init(void)
         switch (i)                                  /* Netfilter hook point and hook function */
         {
         case FORWARD:
-            hooks[i]->hook = (nf_hookfn*) nf_forward_fn;
-            hooks[i]->hooknum = NF_IP_FORWARD;
+            hooks[i].hook = (nf_hookfn*) nf_forward_fn;
+            hooks[i].hooknum = NF_IP_FORWARD;
             break;
         default:
-            hooks[i]->hook = (nf_hookfn*) nf_local_fn;
+            hooks[i].hook = (nf_hookfn*) nf_local_fn;
             switch (i)
             {
             case IN:
-                hooks[i]->hooknum = NF_IP_LOCAL_IN;
+                hooks[i].hooknum = NF_IP_LOCAL_IN;
                 break;
             default:
-                hooks[i]->hooknum = NF_IP_LOCAL_OUT; /* The only hook point left possible */
+                hooks[i].hooknum = NF_IP_LOCAL_OUT; /* The only hook point left possible */
             }
         }
         ERR_CHECK(((int err = nf_register_net_hook(&init_net, &hooks[i])) < 0), destroy_hooks(i), "nf_register_net_hook", err);
