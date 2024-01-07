@@ -35,7 +35,7 @@
 MODULE_LICENSE("GPL");
 
 /* All nf_hook_ops will be pointed by the hooks array */
-static struct nf_hook_ops[HOOKS_NUM] *hooks;
+static struct nf_hook_ops[HOOKS_NUM] hooks;
 
 /* The dropped packet handling procedure */
 static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
