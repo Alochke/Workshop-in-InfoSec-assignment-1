@@ -57,7 +57,7 @@ static void destroy_hooks(int max)
     size_t i;   /* for loop's index */
     for (i = 0; i < max; i++)
     {
-        nf_unregister_net_hook(&init_net, hooks + i * sizeof(nf_hook_ops));
+        nf_unregister_net_hook(&init_net, hooks + i * sizeof(struct nf_hook_ops));
     }
     kfree(hooks);
 }
