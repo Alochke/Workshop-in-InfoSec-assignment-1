@@ -64,7 +64,7 @@ static void destroy_hooks(int max)
 
 static int __init LKM_init(void)
 {
-    ERR_CHECK(hooks = (struct nf_hook_ops*) kcalloc(3 ,sizeof(struct nf_hook_ops), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
+    ERR_CHECK(hooks = (struct nf_hook_ops) kcalloc(3 ,sizeof(struct nf_hook_ops), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
     size_t i;   /* for loop's index */
 
     for(i = 0; i < HOOKS_NUM; i++)
