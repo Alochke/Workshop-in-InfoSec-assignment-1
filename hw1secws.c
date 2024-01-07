@@ -14,6 +14,7 @@
 #include <linux/slab.h>     /* For kmaloc and kfree */
 #include <linux/errno.h>    /* For standard error numbering */
 #include <linux/netfilter.h>/* Next two includes are for the Netfilter API */
+#undef _kernel_             /* this undef is a bit ugly, but it's here so we'll get the NF_IP defines from netfilter_ipv4.h*/
 #include <linux/netfilter_ipv4.h>
 
 #define ALLOW_MESSAGE "*** Packet Accepted ***"
@@ -22,14 +23,6 @@
 #define IN 0 /* The index of the NF_IP_LOCAL_IN hook */
 #define OUT 1 /* The index of the NF_IP_LOCAL_OUT hook */
 #define FORWARD 2 /* The index of the NF_IP_LOCAL_FORWARD hook */
-
-/* 
-The next part is kind of disgusting, sorry.
-I wrote it only because I found-out that the only way to use those MACROS from netfilter_ipv4.h is to undef __KERNEL__, and this makes the compiler go crazy.
-*/
-#define NF_IP_LOCAL_IN		1 /* If the packet is destined for this box. */
-#define NF_IP_FORWARD		2 /* If the packet is destined for another interface. */
-#define NF_IP_LOCAL_OUT		3 /* Packets coming from a local process. */
 
 #define ERR_CHECK(condition, extra_code, function, errno_value){\
     if(condition){\
