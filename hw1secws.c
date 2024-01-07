@@ -66,10 +66,9 @@ static int __init LKM_init(void)
 {
     size_t i;   /* for loop's index */
 
-	ERR_CHECK(hooks = (struct nf_hook_ops*)kmalloc(3, sizeof(struct nf_hook_ops), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
-
     for(i = 0; i < HOOKS_NUM; i++)
     {
+        ERR_CHECK(hooks = (struct nf_hook_ops*)kmalloc(sizeof(struct nf_hook_ops), GFP_KERNEL), destroy_hooks(i), "kmalloc", -EMVSDYNALC)
         hook[i]->pf = PF_INET;                      /* IPv4 */
         hook[i]->priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
         switch (i)                                  /* Netfilter hook point and hook function */
