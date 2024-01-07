@@ -70,26 +70,26 @@ static int __init LKM_init(void)
 
     for(i = 0; i < HOOKS_NUM; i++)
     {
-        hook[i]->pf = PF_INET;                      /* IPv4 */
-        hook[i]->priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
+        hooks[i]->pf = PF_INET;                      /* IPv4 */
+        hooks[i]->priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
         switch (i)                                  /* Netfilter hook point and hook function */
         {
         case FORWARD:
-            hook[i]->hook = (nf_hookfn*) nf_forward_fn;
-            hook[i]->hooknum = NF_IP_FORWARD;
+            hooks[i]->hook = (nf_hookfn*) nf_forward_fn;
+            hooks[i]->hooknum = NF_IP_FORWARD;
             break;
         default:
-            hook[i]->hook = (nf_hookfn*) nf_local_fn;
+            hooks[i]->hook = (nf_hookfn*) nf_local_fn;
             switch (i)
             {
             case IN:
-                hook[i]->hooknum = NF_IP_LOCAL_IN;
+                hooks[i]->hooknum = NF_IP_LOCAL_IN;
                 break;
             default:
-                hook[i]->hooknum = NF_IP_LOCAL_OUT; /* The only hook point left possible */
+                hooks[i]->hooknum = NF_IP_LOCAL_OUT; /* The only hook point left possible */
             }
         }
-        ERR_CHECK(((int err = nf_register_net_hook(&init_net, &hook[i])) < 0), destroy_hooks(i), "nf_register_net_hook", err);
+        ERR_CHECK(((int err = nf_register_net_hook(&init_net, &hooks[i])) < 0), destroy_hooks(i), "nf_register_net_hook", err);
     }
 }
 
