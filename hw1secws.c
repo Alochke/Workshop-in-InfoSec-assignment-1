@@ -35,17 +35,17 @@
 MODULE_LICENSE("GPL");
 
 /* All nf_hook_ops will be pointed by the hooks array */
-static nf_hook_ops hooks[];
+static struct nf_hook_ops hooks[];
 
 /* The dropped packet handling procedure */
-static unsigned int nf_forward_fn(void* priv, sk_buff *skb, const nf_hook_ops *state)
+static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
     printk(BLOCK_MESSAGE);
     return NF_DROP;
 }
 
 /* The allowed packet handling procedure */
-static unsigned int nf_local_fn(void* priv, sk_buff *skb, const nf_hook_ops *state)
+static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
     printk(ALLOW_MESSAGE);
     return NF_ACCEPT;
@@ -64,7 +64,7 @@ static void destroy_hooks(int max)
 
 static int __init LKM_init(void)
 {
-    ERR_CHECK(hooks = nf_hook_ops* kcalloc(3 ,sizeof(nf_hook_ops), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
+    ERR_CHECK(hooks = nf_hook_ops* kcalloc(3 ,sizeof(struct nf_hook_ops), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
     size_t i;   /* for loop's index */
 
     for(i = 0; i < HOOKS_NUM; i++)
