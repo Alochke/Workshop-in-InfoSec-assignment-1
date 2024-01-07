@@ -111,4 +111,5 @@ module_exit(LKM_exit);
 
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Alon Polsky")
+MODULE_AUTHOR("Alon Polsky");
+MODULE_DESCRIPTION("HW1 solution for the course Workshop in Information Security.");
