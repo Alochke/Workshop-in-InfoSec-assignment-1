@@ -73,7 +73,7 @@ static void destroy_hooks(int max)
 static int __init LKM_init(void)
 {
     size_t i;   /* for loop's index */
-    ine err;
+    int err;    /* we'll use that variable at the end of the function definition to save the return value of nf_register_net_hook, in case it'll error and we'll return its return value. */
     
     ERR_CHECK((hooks = kmalloc(sizeof(struct nf_hook_ops) * HOOKS_NUM, GFP_KERNEL)) == NULL,, "kmalloc", -ENOMEM)
 
