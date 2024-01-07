@@ -64,7 +64,7 @@ static void destroy_hooks(int max)
 
 static int __init LKM_init(void)
 {
-    ERR_CHECK(hooks = kmalloc(sizeof(struct nf_hook_ops) * HOOKS_NUM, GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
+    ERR_CHECK((hooks = kmalloc(sizeof(struct nf_hook_ops) * HOOKS_NUM), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
     size_t i;   /* for loop's index */
 
     for(i = 0; i < HOOKS_NUM; i++)
@@ -88,7 +88,7 @@ static int __init LKM_init(void)
                 hook[i]->hooknum = NF_IP_LOCAL_OUT; /* The only hook point left possible */
             }
         }
-        ERR_CHECK(int err = (nf_register_net_hook(&init_net, &hook[i]) < 0), destroy_hooks(i), "nf_register_net_hook", err);
+        ERR_CHECK(((int err = nf_register_net_hook(&init_net, &hook[i])) < 0), destroy_hooks(i), "nf_register_net_hook", err);
     }
 }
 
