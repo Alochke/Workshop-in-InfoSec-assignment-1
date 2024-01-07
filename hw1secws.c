@@ -39,9 +39,6 @@ I wrote it only because I found-out that the only way to use those MACROS from n
     }\
 }
 
-/* Declaring the license as the free GNU Public Licencse, as we were taught one should do when writing a kernel module in OS course */
-MODULE_LICENSE("GPL");
-
 /* All nf_hook_ops will be pointed by the hooks array */
 static struct nf_hook_ops *hooks;
 
@@ -111,3 +108,8 @@ static void __exit LKM_exit(void)
 
 module_init(LKM_init);
 module_exit(LKM_exit);
+
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Alon Polsky")
+MODULE_DESCRIPTION("HW1 solution for the course Workshop in Information Security.")
