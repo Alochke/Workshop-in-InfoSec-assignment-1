@@ -101,6 +101,7 @@ static int __init LKM_init(void)
 
         ERR_CHECK((err = nf_register_net_hook(&init_net, &hooks[i])) < 0, destroy_hooks(i), "nf_register_net_hook", err);
     }
+    return 0;
 }
 
 static void __exit LKM_exit(void)
