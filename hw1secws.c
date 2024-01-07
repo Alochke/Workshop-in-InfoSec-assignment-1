@@ -54,7 +54,8 @@ static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf
 /* Deletes hook with index less than max from existance */
 static void destroy_hooks(int max)
 {
-    for (size_t i = 0; i < max; i++)
+    size_t i;   /* for loop's index */
+    for (i = 0; i < max; i++)
     {
         nf_unregister_net_hook(&init_net, hooks[i]);
         kfree(hooks[i]);
@@ -63,9 +64,11 @@ static void destroy_hooks(int max)
 
 static int __init LKM_init(void)
 {
+    size_t i;   /* for loop's index */
+
 	ERR_CHECK(hooks = (struct nf_hook_ops*)kmalloc(3, sizeof(struct nf_hook_ops), GFP_KERNEL),, "kmalloc", -EMVSDYNALC)
 
-    for(size_t i = 0; i < HOOKS_NUM; i++)
+    for(i = 0; i < HOOKS_NUM; i++)
     {
         hook[i]->pf = PF_INET;                      /* IPv4 */
         hook[i]->priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
