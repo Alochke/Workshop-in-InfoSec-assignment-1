@@ -5,8 +5,8 @@
 #include <linux/netfilter.h>/* Next two includes are for the Netfilter API */
 #include <linux/netfilter_ipv4.h>
 
-#define ALLOW_MESSAGE "*** Packet Accepted ***"
-#define BLOCK_MESSAGE "*** Packet Dropped ***"
+#define ALLOW_MESSAGE "*** Packet Accepted ***\n" /*The \n is apparently necessary for immediate printing of printk.*/
+#define BLOCK_MESSAGE "*** Packet Dropped ***\n"
 #define HOOKS_NUM 3 /* The number of nf_hook_ops structs We'll use */
 #define IN 0 /* The index of the NF_IP_LOCAL_IN hook */
 #define OUT 1 /* The index of the NF_IP_LOCAL_OUT hook */
@@ -36,14 +36,14 @@ static struct nf_hook_ops *hooks;
 /* The dropped packet handling procedure */
 static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
-    printk(KERN_NOTICE BLOCK_MESSAGE);
+    printk(BLOCK_MESSAGE);
     return NF_DROP;
 }
 
 /* The allowed packet handling procedure */
 static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
-    printk(KERN_NOTICE ALLOW_MESSAGE);
+    printk(ALLOW_MESSAGE);
     return NF_ACCEPT;
 }
 
