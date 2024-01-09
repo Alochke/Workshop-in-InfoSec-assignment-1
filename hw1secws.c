@@ -1,20 +1,8 @@
-/*
-    I based my code on this article:
-        https://infosecwriteups.com/linux-kernel-communication-part-1-netfilter-hooks-15c07a5a5c4e
-    
-    Conceptually, the idea comes from the facts that:
-        1. All allowed packets shall go thraugh NF_IP_LOCAL_IN or NF_IP_LOCAL_OUT Netfilter hook points, and only allowed packets go thraugh those hook points.
-        2. All blocked packets go thraugh NF_IP_FORWARD, and only those packets go through this hook point.
-    
-    Those we create three diffrent hooks, first two are hooked into NF_IP_LOCAL_IN and NF_IP_LOCAL_OUT, handling allowed packets, and the third is hooked into NF_IP_FORWARD handling the blocked ones.
-*/
-
 #include <linux/kernel.h>   /* We're doing kernel work */
 #include <linux/module.h>   /* Specifically, a module */
 #include <linux/slab.h>     /* For kmaloc and kfree */
 #include <linux/errno.h>    /* For standard error numbering */
 #include <linux/netfilter.h>/* Next two includes are for the Netfilter API */
-#undef __KERNEL__
 #include <linux/netfilter_ipv4.h>
 
 #define ALLOW_MESSAGE "*** Packet Accepted ***"
@@ -24,15 +12,25 @@
 #define OUT 1 /* The index of the NF_IP_LOCAL_OUT hook */
 #define FORWARD 2 /* The index of the NF_IP_LOCAL_FORWARD hook */
 
+/* 
+    The next part is kind of disgusting, sorry.
+    I wrote it only because I found out that the only way to use those MACROS is to undef __kernel__ so we can get the macros from linux/netfilter_ipv4.h...
+    But, if we'll do that the compiler will inevitably try to import limits.h, which is undefined, I suppose because we are compiling kernel-space code.
+    Anyway, because I felt like that's the start of falling down a rabbit hole, I deccided to go with this less beutiful soulution of simply defining the macros.
+*/
+#define NF_IP_LOCAL_IN		1 /* If the packet is destined for this box. */
+#define NF_IP_FORWARD		2 /* If the packet is destined for another interface. */
+#define NF_IP_LOCAL_OUT		3 /* Packets coming from a local process. */
+
 #define ERR_CHECK(condition, extra_code, function, errno_value){\
-    if(condition){\
-        extra_code;\
-        printk(KERN_ERR "%s failed.", function);\
-        return errno_value;\
+    if(condition){                                              \
+        extra_code;                                             \
+        printk(KERN_ERR "%s failed.", function);                \
+        return errno_value;                                     \
     }\
 }
 
-/* All nf_hook_ops will be pointed by the hooks array */
+/* All nf_hook_ops will be pointed by the hooks pointer, so it'll function as an array (we'll use hooks[i] to refer to hook i.) */
 static struct nf_hook_ops *hooks;
 
 /* The dropped packet handling procedure */
@@ -56,11 +54,11 @@ static void destroy_hooks(int max)
     for (i = 0; i < max; i++)
     {
         nf_unregister_net_hook(&init_net, &hooks[i]);
-        printk("%d suecceded", i);
     }
     kfree(hooks);
 }
 
+/* The module initialization function. */
 static int __init LKM_init(void)
 {
     size_t i;   /* for loop's index */
@@ -71,7 +69,7 @@ static int __init LKM_init(void)
     for(i = 0; i < HOOKS_NUM; i++)
     {
         hooks[i].pf = PF_INET;                      /* IPv4 */
-        hooks[i].priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
+        hooks[i].priority = NF_IP_PRI_FIRST;		/* max hook priority */
         switch (i)                                  /* Netfilter hook point and hook function */
         {
         case FORWARD:
@@ -95,6 +93,7 @@ static int __init LKM_init(void)
     return 0;
 }
 
+/* module removal method. */
 static void __exit LKM_exit(void)
 {
     destroy_hooks(HOOKS_NUM);
