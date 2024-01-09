@@ -36,14 +36,14 @@ static struct nf_hook_ops *hooks;
 /* The dropped packet handling procedure */
 static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
-    printk(BLOCK_MESSAGE);
+    printk(KERN_NOTICE BLOCK_MESSAGE);
     return NF_DROP;
 }
 
 /* The allowed packet handling procedure */
 static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
-    printk(ALLOW_MESSAGE);
+    printk(KERN_NOTICE ALLOW_MESSAGE);
     return NF_ACCEPT;
 }
 
