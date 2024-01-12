@@ -56,7 +56,7 @@ void cleanup(stage stg)
 
 int sysfs_example_init(void)
 {
-	int err_num = 0; // Will be
+	int err = 0; // Will be used store the value returned from device_create_file, so we'll be able to return it in case of an error.
 
 	//create char device
 	ERR_CHECK((major_number = register_chrdev(0, "FW_Device", &fops)) < 0, printk(KERN_ERR "register_chrdev failed."), major_number)
@@ -68,7 +68,7 @@ int sysfs_example_init(void)
 	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, "FW_class" "_" "FW_Device")), cleanup(second); printk(KERN_ERR "device_create failed"), sysfs_device)
 
 	//create sysfs file attributes
-	ERR_CHECK(err_num = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr), cleanup(third); printk(KERN_ERR "device_create_file failed"), err_num)
+	ERR_CHECK((err_num = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(third); printk(KERN_ERR "device_create_file failed"), err)
 	
 	return SUCCESS;
 }
