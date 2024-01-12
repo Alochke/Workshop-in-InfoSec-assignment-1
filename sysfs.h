@@ -24,8 +24,8 @@ void sysfs_exit(void);
     A safe way to transfer an int from userspace to kernel sapce,
     Sets flag to TRUE on success.
 */
-#define INT_TRANSFER(kernel_buf, user_buff, flag)   \
-    if(!put_user((int) kernel, user_buff))          \
+#define INT_TRANSFER(kernel_buf, user_buf, flag)    \
+    if(!put_user((int) kernel_buf, user_buf))       \
 	{                                               \
 		flag = TRUE                                 \
 	}                                               \
