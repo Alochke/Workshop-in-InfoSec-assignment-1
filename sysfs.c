@@ -63,10 +63,10 @@ int sysfs_example_init(void)
 	ERR_CHECK((major_number = register_chrdev(0, "FW_Device", &fops)) < 0, printk(KERN_ERR "register_chrdev failed."), major_number)
 
 	//create sysfs class
-	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, "FW_class")), cleanup(first); printk(KERN_ERR "class_create failed."), sysfs_class)
+	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, "FW_class")), cleanup(first); printk(KERN_ERR "class_create failed."), (int) sysfs_class)
 	
 	//create sysfs device
-	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, "FW_class" "_" "FW_Device")), cleanup(second); printk(KERN_ERR "device_create failed"), sysfs_device)
+	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, "FW_class" "_" "FW_Device")), cleanup(second); printk(KERN_ERR "device_create failed"), (int) sysfs_device)
 
 	//create sysfs file attributes
 	ERR_CHECK((err = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(third); printk(KERN_ERR "device_create_file failed"), err)
