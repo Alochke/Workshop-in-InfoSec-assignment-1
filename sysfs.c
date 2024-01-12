@@ -40,17 +40,17 @@ ssize_t modify(struct device *dev, struct device_attribute *attr, const char *bu
 
 static DEVICE_ATTR(sysfs_att, S_IWUSR | S_IRUSR , display, modify);
 
-void cleanup(stage stg)
+void cleanup(enum stage stg)
 {
 	switch (stg)
 	{
-	case fourth:
+	case FOURTH:
 		device_remove_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr);
-	case third:
+	case THIRD:
 		device_destroy(sysfs_class, MKDEV(major_number, SYSFS_MINOR));
-	case second:
+	case SECOND:
 		class_destroy(sysfs_class);
-	case first:
+	case FIRST:
 		unregister_chrdev(major_number, "FW_Device");
 	}
 }
@@ -63,18 +63,18 @@ int sysfs_example_init(void)
 	ERR_CHECK((major_number = register_chrdev(0, "FW_Device", &fops)) < 0, printk(KERN_ERR "register_chrdev failed."), major_number)
 
 	//create sysfs class
-	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, "FW_class")), cleanup(first); printk(KERN_ERR "class_create failed."), (int) sysfs_class)
+	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, "FW_class")), cleanup(FIRST); printk(KERN_ERR "class_create failed."), (int) sysfs_class)
 	
 	//create sysfs device
-	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, "FW_class" "_" "FW_Device")), cleanup(second); printk(KERN_ERR "device_create failed"), (int) sysfs_device)
+	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, "FW_class" "_" "FW_Device")), cleanup(SECOND); printk(KERN_ERR "device_create failed"), (int) sysfs_device)
 
 	//create sysfs file attributes
-	ERR_CHECK((err = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(third); printk(KERN_ERR "device_create_file failed"), err)
+	ERR_CHECK((err = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(THIRD); printk(KERN_ERR "device_create_file failed"), err)
 	
 	return SUCCESS;
 }
 
 void sysfs_exit(void)
 {
-	cleanup(fourth);
+	cleanup(FOURTH);
 }

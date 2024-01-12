@@ -15,7 +15,7 @@
 #define SYSFS_MINOR 0 // To use with MKDEV to generate a number for a sysfs device.
 
 /* The next enum is for the clean_up function in sysfs.c. */
-enum stage{first = 0, second = 1, third = 2, fourth =3};
+enum stage{FIRST = 0, SECOND = 1, THIRD = 2, FOURTH =3};
 
 int sysfs_init(void);
 void sysfs_exit(void);
