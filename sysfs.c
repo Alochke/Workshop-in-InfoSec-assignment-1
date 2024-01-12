@@ -73,7 +73,7 @@ int sysfs_example_init(void)
 	return SUCCESS;
 }
 
-static void sysfs_example_exit(void)
+static void sysfs_exit(void)
 {
 	cleanup(fourth)
 }
