@@ -1,4 +1,7 @@
-obj-m += hw2secws.o sysfs.o
+obj-m += hw2secws.o
+
+#append other source files except hw2secws.c which would be include by default
+my_module-objs+= sysfs.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
