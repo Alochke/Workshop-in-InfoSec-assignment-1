@@ -18,7 +18,7 @@
 enum stage{first = 0, second = 1, third = 2, fourth =3};
 
 int sysfs_init(void);
-static void sysfs_exit(void);
+void sysfs_exit(void);
 
 /* 
     A safe way to transfer an int from userspace to kernel sapce,
