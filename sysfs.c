@@ -69,7 +69,7 @@ int sysfs_example_init(void)
 	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, "FW_class" "_" "FW_Device")), cleanup(second); printk(KERN_ERR "device_create failed"), sysfs_device)
 
 	//create sysfs file attributes
-	ERR_CHECK((err_num = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(third); printk(KERN_ERR "device_create_file failed"), err)
+	ERR_CHECK((err = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(third); printk(KERN_ERR "device_create_file failed"), err)
 	
 	return SUCCESS;
 }
