@@ -25,8 +25,8 @@
 #define NF_IP_LOCAL_OUT		3 /* Packets coming from a local process. */
 #define NUMBER_OF_ENUMARATORS 2 /* Refers to accepted and dropped which are declared in hw2secws.h. */
 
-extern unsigned int accepted = 0; /* An enumerator for the accepted number of packets. */
-extern unsigned int dropped = 0;  /* An enumerator for the dropped number of packets. */
+extern unsigned int accepted; /* An enumerator for the accepted number of packets. */
+extern unsigned int dropped;  /* An enumerator for the dropped number of packets. */
 
 #define ERR_CHECK(condition, extra_code, errno_value){          \
     if(condition){                                              \
