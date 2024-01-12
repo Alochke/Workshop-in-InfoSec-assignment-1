@@ -1,5 +1,5 @@
 #ifndef HW2SECWS
-#def HW2SECWS
+#define HW2SECWS
 #include <linux/kernel.h>   /* We're doing kernel work */
 #include <linux/module.h>   /* Specifically, a module */
 #include <linux/slab.h>     /* For kmaloc and kfree */
@@ -28,7 +28,7 @@
 extern unsigned int accepted = 0; /* An enumerator for the accepted number of packets. */
 extern unsigned int dropped = 0;  /* An enumerator for the dropped number of packets. */
 
-#define ERR_CHECK(condition, extra_code, errno_value){\
+#define ERR_CHECK(condition, extra_code, errno_value){          \
     if(condition){                                              \
         extra_code;                                             \
         return errno_value;                                     \
