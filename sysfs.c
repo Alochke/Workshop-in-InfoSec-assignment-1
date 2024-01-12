@@ -22,8 +22,8 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 	INT_TRANSFER(temp, buf + sizeof(unsigned int), bool2)
 	if(bool1 && bool2)
 	{
-		user_put((int) accepted, buf)
-		user_put((int) dropped + sizeof(unsigned int), buf)
+		user_put((int) accepted, buf);
+		user_put((int) dropped + sizeof(unsigned int), buf);
 	}
 	return NUMBER_OF_BYTES_TRANSFERED
 }
