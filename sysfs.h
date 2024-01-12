@@ -5,7 +5,7 @@
 #include <linux/module.h>
 #include <linux/fs.h>
 #include <linux/device.h>
-#include <linux/uaccess.h>  /* for get_user and put_user */
+#include <linux/uaccess.h>  /* for get_user put_user */
 #include "hw2secws.h"
 
 #define TRUE 1
@@ -25,7 +25,7 @@ static void sysfs_exit(void);
     Sets flag to TRUE on success.
 */
 #define INT_TRANSFER(kernel_buf, user_buf , flag)   \
-    if(!user_put((int) kernel, buff))               \
+    if(!put_user((int) kernel, buff))               \
 	{                                               \
 		flag = TRUE                                 \
 	}                                               \
