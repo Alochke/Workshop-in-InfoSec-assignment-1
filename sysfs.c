@@ -35,6 +35,7 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 ssize_t modify(struct device *dev, struct device_attribute *attr, const char *buf, size_t count){
 	accepted = 0;
 	dropped = 0;
+	return 0;
 }
 
 static DEVICE_ATTR(sysfs_att, S_IWUSR | S_IRUSR , display, modify);

@@ -27,7 +27,7 @@ void sysfs_exit(void);
 #define INT_TRANSFER(kernel_buf, user_buf, flag)    \
     if(!put_user((int) kernel_buf, user_buf))       \
 	{                                               \
-		flag = TRUE                                 \
+		flag = TRUE;                                \
 	}                                               \
 
 #endif
