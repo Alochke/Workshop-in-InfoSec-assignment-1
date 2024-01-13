@@ -65,7 +65,7 @@ void cleanup(enum stage stg)
 	}
 }
 
-int sysfs_example_init(void)
+int sysfs_init(void)
 {
 	int err = 0; // Will be used store the value returned from device_create_file, so we'll be able to return it in case of an error.
 
@@ -84,3 +84,7 @@ int sysfs_example_init(void)
 	return SUCCESS;
 }
 
+void sysfs_exit(void)
+{
+	cleanup(FOURTH);
+}
