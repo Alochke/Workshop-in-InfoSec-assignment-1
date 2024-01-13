@@ -6,7 +6,7 @@
 #include <linux/errno.h>    /* For standard error numbering */
 #include <linux/netfilter.h>/* Next two includes are for the Netfilter API */
 #include <linux/netfilter_ipv4.h>
-#include "sysfs.c"
+#include "sysfs.h"
 
 #define ALLOW_MESSAGE "*** Packet Accepted ***\n" /*The \n is apparently necessary for immediate printing of printk.*/
 #define BLOCK_MESSAGE "*** Packet Dropped ***\n"

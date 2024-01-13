@@ -6,7 +6,7 @@
 #include <linux/fs.h>
 #include <linux/device.h>
 #include <linux/uaccess.h>  /* for get_user put_user */
-#include "hw2secws.c"
+#include "hw2secws.h"
 
 #define TRUE 1
 #define ERROR -1
