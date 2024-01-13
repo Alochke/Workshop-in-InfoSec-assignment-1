@@ -6,7 +6,7 @@
 #include <linux/errno.h>    /* For standard error numbering */
 #include <linux/netfilter.h>/* Next two includes are for the Netfilter API */
 #include <linux/netfilter_ipv4.h>
-#include "sysfs.h"
+#include "sysfs.c"
 
 #define ALLOW_MESSAGE "*** Packet Accepted ***\n" /*The \n is apparently necessary for immediate printing of printk.*/
 #define BLOCK_MESSAGE "*** Packet Dropped ***\n"
@@ -25,8 +25,8 @@
 #define NF_IP_LOCAL_OUT		3 /* Packets coming from a local process. */
 #define NUMBER_OF_ENUMARATORS 2 /* Refers to accepted and dropped which are declared in hw2secws.h. */
 
-extern unsigned int accepted; /* An enumerator for the accepted number of packets. */
-extern unsigned int dropped;  /* An enumerator for the dropped number of packets. */
+extern unsigned int accepted = 0; /* An enumerator for the accepted number of packets. */
+extern unsigned int dropped = 0;  /* An enumerator for the dropped number of packets. */
 
 #define ERR_CHECK(condition, extra_code, errno_value){          \
     if(condition){                                              \

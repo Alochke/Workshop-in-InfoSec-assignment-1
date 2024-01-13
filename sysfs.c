@@ -1,5 +1,15 @@
 #include "sysfs.h"
 
+/* 
+    A safe way to transfer an int from userspace to kernel sapce,
+    Sets flag to TRUE on success.
+*/
+#define INT_TRANSFER(kernel_buf, user_buf, flag)    \
+    if(!put_user((int) kernel_buf, user_buf))       \
+	{                                               \
+		flag = TRUE;                                \
+	}                                               \
+
 static int major_number;
 static struct class* sysfs_class = NULL;
 static struct device* sysfs_device = NULL;
@@ -74,7 +84,3 @@ int sysfs_example_init(void)
 	return SUCCESS;
 }
 
-void sysfs_exit(void)
-{
-	cleanup(FOURTH);
-}

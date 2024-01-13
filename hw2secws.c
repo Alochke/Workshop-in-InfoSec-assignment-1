@@ -1,5 +1,4 @@
 #include "hw2secws.h"
-#include "sysfs.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Alon Polsky");
@@ -7,6 +6,7 @@ MODULE_DESCRIPTION("HW2 solution for the course Workshop in Information Security
 
 /* All nf_hook_ops will be pointed by the hooks pointer, so it'll function as an array (we'll use hooks[i] to refer to hook i.) */
 static struct nf_hook_ops *hooks;
+
 
 /* 
     The dropped packet handling procedure.
@@ -82,7 +82,7 @@ static int __init LKM_init(void)
 /* module removal method. */
 static void __exit LKM_exit(void)
 {
-    sysfs_exit();
+    clean_up(FOURTH);
     destroy_hooks(HOOKS_NUM);
 }
 
