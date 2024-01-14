@@ -29,7 +29,6 @@
     MODULE_LICENSE("GPL");                                                              \
     MODULE_AUTHOR("Alon Polsky");                                                       \
     MODULE_DESCRIPTION("HW2 solution for the course Workshop in Information Security.");\
-}
 
 extern unsigned int accepted; /* An enumerator for the accepted number of packets. */
 extern unsigned int dropped;  /* An enumerator for the dropped number of packets. */
