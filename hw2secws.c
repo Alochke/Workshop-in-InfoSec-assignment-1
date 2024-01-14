@@ -1,8 +1,6 @@
 #include "hw2secws.h"
 
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Alon Polsky");
-MODULE_DESCRIPTION("HW2 solution for the course Workshop in Information Security.");
+MODULE_SIGNATURE
 
 /* All nf_hook_ops will be pointed by the hooks pointer, so it'll function as an array (we'll use hooks[i] to refer to hook i.) */
 static struct nf_hook_ops *hooks;

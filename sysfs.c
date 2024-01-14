@@ -1,6 +1,7 @@
 #include "sysfs.h"
 
-MODULE_LICENSE("GPL");
+MODULE_SIGNATURE
+
 /* 
     A safe way to transfer an int from userspace to kernel sapce,
     Sets flag to TRUE on success.
