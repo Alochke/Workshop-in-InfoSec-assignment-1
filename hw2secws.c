@@ -4,8 +4,6 @@ MODULE_SIGNATURE
 
 /* All nf_hook_ops will be pointed by the hooks pointer, so it'll function as an array (we'll use hooks[i] to refer to hook i.) */
 static struct nf_hook_ops *hooks;
-extern unsigned int accepted = 0;
-extern unsigned int dropped = 0; 
 
 
 /* 
