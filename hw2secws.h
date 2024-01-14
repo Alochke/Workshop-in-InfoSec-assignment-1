@@ -25,7 +25,7 @@
 #define NF_IP_LOCAL_OUT		3 /* Packets coming from a local process. */
 #define NUMBER_OF_ENUMARATORS 2 /* Refers to accepted and dropped which are declared in hw2secws.h. */
 
-#define MODULE_SIGNATURE {                                                               \
+#define MODULE_SIGNATURE                                                                \
     MODULE_LICENSE("GPL");                                                              \
     MODULE_AUTHOR("Alon Polsky");                                                       \
     MODULE_DESCRIPTION("HW2 solution for the course Workshop in Information Security.");\
