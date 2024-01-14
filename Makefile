@@ -1,4 +1,4 @@
-obj-m += module.o
+obj-m += hw2secws.o
 
 #append other source files except hw2secws.c which would be include by default
 hw2secws-objs := sysfs.o hw2secws.o
