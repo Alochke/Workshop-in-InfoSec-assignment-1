@@ -2,6 +2,9 @@
 
 MODULE_SIGNATURE
 
+extern unsigned int accepted = 0;
+extern unsigned int dropped = 0;
+
 /* 
     A safe way to transfer an int from userspace to kernel sapce,
     Sets flag to TRUE on success.
