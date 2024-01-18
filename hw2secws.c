@@ -28,7 +28,12 @@ static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf
     return NF_ACCEPT;
 }
 
-/* Deletes hook with index less than max from existance and frees kernel's allocated memory. */
+/*
+    Deletes hook with index less than max from existance and frees kernel's allocated memory.
+    
+    Parameters:
+    - max (int): Hooks with indecies in [0,max] will be unregisterred.
+*/
 static void destroy_hooks(int max)
 {
     size_t i;   /* for loop's index */
@@ -72,8 +77,8 @@ static int __init LKM_init(void)
         }
 
         ERR_CHECK((err = nf_register_net_hook(&init_net, &hooks[i])) < 0, destroy_hooks(i); printk(KERN_ERR "nf_register_net_hook failed.");, err);
-        ERR_CHECK((err = sysfs_init()), destroy_hooks(i);, err)
     }
+    ERR_CHECK((err = sysfs_init()), destroy_hooks(HOOKS_NUM);, err)
     return 0;
 }
 

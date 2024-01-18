@@ -22,6 +22,9 @@ static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf
 static void destroy_hooks(int max)
     Deletes hook with index less than max from existance and frees kernel's allocated memory.
 
+    Parameters:
+    - max (int): Hooks with indecies in [0,max] will be unregisterred.
+
 static int __init LKM_init(void)
     The module initialization function.
 

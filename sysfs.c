@@ -3,15 +3,6 @@
 MODULE_SIGNATURE
 
 
-/* 
-    A safe way to transfer an int from userspace to kernel sapce,
-    Sets flag to TRUE on success.
-*/
-#define INT_TRANSFER(kernel_buf, user_buf, flag)    \
-    if(!put_user((int) kernel_buf, user_buf))       \
-	{                                               \
-		flag = TRUE;                                \
-	}                                               \
 
 static int major_number;
 static struct class* sysfs_class = NULL;
@@ -24,7 +15,7 @@ static struct file_operations fops = {
 
 /*
 	The implementation of show.
-	Puts inside of buf the values of accepted and dropped, which are defined in hw2secws.h and then returns the number of bytes written succefuly.
+	Puts inside of address- buf the values of accepted and dropped, which are defined in hw2secws.h and then returns the number of bytes written succefuly.
 */
 ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
@@ -35,15 +26,16 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 	INT_TRANSFER(temp, buf + sizeof(unsigned int), bool2)
 	if(bool1 && bool2)
 	{
-		put_user((int) accepted, buf);
-		put_user((int) dropped + sizeof(unsigned int), buf);
+		put_user(accepted, buf);
+		put_user(dropped, buf + sizeof(unsigned int));
+		return NUMBER_OF_BYTES_TRANSFERED;
 	}
 	return NUMBER_OF_BYTES_TRANSFERED;
 }
 
 /*
 	The implementation of store.
-	zeros accepted and dropped which are defined in hw2secws.h.
+	Zeros accepted and dropped which are defined in hw2secws.h.
 */
 ssize_t modify(struct device *dev, struct device_attribute *attr, const char *buf, size_t count){
 	accepted = 0;
@@ -51,10 +43,18 @@ ssize_t modify(struct device *dev, struct device_attribute *attr, const char *bu
 	return 0;
 }
 
+// Links the device with display as show and modify as store (both funtions defined in sysfs.c), in a sysfs manner.
 static DEVICE_ATTR(sysfs_att, S_IWUSR | S_IRUSR , display, modify);
 
+/*
+	Cleans the sysfs part of the module.
+
+	Parameters:
+    - stg (enum stage): A designated enum's member that represents the stage of initialization the sysfs part of the module is in.
+*/
 void cleanup(enum stage stg)
 {
+	// We use the enum- stage, defined in sysfs.h to choose action based on the state of the sysfs initialization the module is currently at. 
 	switch (stg)
 	{
 	case FOURTH:
@@ -64,22 +64,25 @@ void cleanup(enum stage stg)
 	case SECOND:
 		class_destroy(sysfs_class);
 	case FIRST:
-		unregister_chrdev(major_number, "FW_Device");
+		unregister_chrdev(major_number, NAME_OF_DEVICE);
 	}
 }
 
+/*
+	Initializes the sysfs part of the module.
+*/
 int sysfs_init(void)
 {
-	int err = 0; // Will be used store the value returned from device_create_file, so we'll be able to return it in case of an error.
+	int err = 0; // Will be used to store the value returned from device_create_file, so we'll be able to return it in case of an error.
 
 	//create char device
-	ERR_CHECK((major_number = register_chrdev(0, "FW_Device", &fops)) < 0, printk(KERN_ERR "register_chrdev failed."), major_number)
+	ERR_CHECK((major_number = register_chrdev(0, NAME_OF_DEVICE, &fops)) < 0, printk(KERN_ERR "register_chrdev failed."), major_number)
 
 	//create sysfs class
-	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, "FW_class")), cleanup(FIRST); printk(KERN_ERR "class_create failed."), (int) sysfs_class)
+	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, NAME_OF_CLASS)), cleanup(FIRST); printk(KERN_ERR "class_create failed."), (int) sysfs_class)
 	
 	//create sysfs device
-	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, "FW_class" "_" "FW_Device")), cleanup(SECOND); printk(KERN_ERR "device_create failed"), (int) sysfs_device)
+	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, NAME_OF_CLASS "_" NAME_OF_DEVICE)), cleanup(SECOND); printk(KERN_ERR "device_create failed"), (int) sysfs_device)
 
 	//create sysfs file attributes
 	ERR_CHECK((err = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(THIRD); printk(KERN_ERR "device_create_file failed"), err)
@@ -87,6 +90,10 @@ int sysfs_init(void)
 	return SUCCESS;
 }
 
+/*
+	A wrapper function of cleanup, that serves as an abstraction layer of the clean up process of the sysfs part of the module.
+	In case the initialization of that part of the module is done.
+*/
 void sysfs_exit(void)
 {
 	cleanup(FOURTH);

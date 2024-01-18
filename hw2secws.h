@@ -1,9 +1,9 @@
 #ifndef HW2SECWS
 #define HW2SECWS
-#include <linux/kernel.h>   /* We're doing kernel work */
-#include <linux/module.h>   /* Specifically, a module */
-#include <linux/slab.h>     /* For kmaloc and kfree */
-#include <linux/errno.h>    /* For standard error numbering */
+#include <linux/kernel.h>   /* We're doing kernel work. */
+#include <linux/module.h>   /* We're adding a kernel module. */
+#include <linux/slab.h>     /* For kmaloc and kfree. */
+#include <linux/errno.h>    /* For standard error numbering. */
 #include <linux/netfilter.h>/* Next two includes are for the Netfilter API */
 #include <linux/netfilter_ipv4.h>
 #include "sysfs.h"
@@ -20,10 +20,10 @@
     But, if we'll do that the compiler will inevitably try to import limits.h, which is undefined, I suppose because we are compiling kernel-space code.
     Anyway, because I felt like that's the start of falling down a rabbit hole, I deccided to go with this less beutiful soulution of simply defining the macros.
 */
-#define NF_IP_LOCAL_IN		1 /* If the packet is destined for this box. */
-#define NF_IP_FORWARD		2 /* If the packet is destined for another interface. */
-#define NF_IP_LOCAL_OUT		3 /* Packets coming from a local process. */
-#define NUMBER_OF_ENUMARATORS 2 /* Refers to accepted and dropped which are declared in hw2secws.h. */
+#define NF_IP_LOCAL_IN          1 /* If the packet is destined for this box. */
+#define NF_IP_FORWARD           2 /* If the packet is destined for another interface. */
+#define NF_IP_LOCAL_OUT         3 /* Packets coming from a local process. */
+#define NUMBER_OF_ENUMARATORS   2 /* Refers to accepted and dropped which are declared in hw2secws.h. */
 
 #define MODULE_SIGNATURE                                                                \
     MODULE_LICENSE("GPL");                                                              \
