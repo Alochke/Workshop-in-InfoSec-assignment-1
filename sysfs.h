@@ -8,7 +8,7 @@
 #include <linux/uaccess.h>  /* For put_user Macros. */
 #include "hw2secws.h"
 
-#define NAME_OF_DEVICE "fw_Device"
+#define NAME_OF_DEVICE "fw_device"
 #define NAME_OF_CLASS "fw_class"
 #define SUCCESS 0
 #define TRUE 1
