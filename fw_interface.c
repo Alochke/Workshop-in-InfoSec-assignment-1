@@ -1,5 +1,7 @@
 #include <string.h> // For strcmp.
-#include <stdio.h>  // For reading from and writing to files and for printing.
+#include <fcntl.h>  // For openning the sysfs attributes file.
+#include <unistd.h> // For writing to and reading from the sysfs attributes file.
+#include <stdio.h>  // For printing.
 
 
 #define ATTRIBUTE_PATH "/sys/class/fw_class/fw_class_fw_device/sysfs_att"
@@ -15,7 +17,7 @@
 
 int main( int argc, char* argv[] )
 {
-    FILE* fptr;                 // Will be used to interact with the sysfs attribute.
+    int fd;                     // A file descriptor that will be used to interact with the sysfs attribute.
     unsigned int accepted;      // The number of accepted packetes.
     unsigned int dropped;       // The number of dropped packetes.
     char buf[SHOW_TRANSFER];   // Will be used to store the data transfered from the module in case no arguments were given to the program.
@@ -27,17 +29,17 @@ int main( int argc, char* argv[] )
         return ERROR;
     }
 
-    fptr = fopen(ATTRIBUTE_PATH, "r+");
-    if(fptr == NULL)
+    fd = open(ATTRIBUTE_PATH, O_RDWR);
+    if(fd == ERROR)
     {
         printf(PERMISSION_ERR);
         return ERROR;
     }
 
     if(argc == MAX_INPUTS)
-        fputs("", fptr);
+        write(fd, NULL, 0);
     else{
-        fgets(buf, SHOW_TRANSFER, fptr);
+        read(fd, buf, SHOW_TRANSFER);
         accepted = (unsigned int) *buf;
         dropped = (unsigned int) *(buf + sizeof(unsigned int));
         printf("Firewall Packets Summary:\n");
@@ -46,5 +48,5 @@ int main( int argc, char* argv[] )
         printf("Total number of packets: %d \n", accepted + dropped);
     }
 
-    fclose(fptr);
+    close(fd);
 }
