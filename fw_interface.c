@@ -18,7 +18,7 @@ int main(char** argv, int argc)
     void* buf[SHOW_TRANSFER];   // Will be used to store the data transfered from the module in case no arguments were given to the program.
 
     // Checking input.
-    if(argc > MAX_INPUTS || ((argc == MAX_INPUTS) && (strcmp(&(const char)CORRECT_INPUT, argv[MAX_INPUTS]) != EQ)))
+    if(argc > MAX_INPUTS || ((argc == MAX_INPUTS) && (strcmp(&((const char)CORRECT_INPUT), argv[MAX_INPUTS]) != EQ)))
     {
         printf(ERROR_MSG);
         return ERROR;
