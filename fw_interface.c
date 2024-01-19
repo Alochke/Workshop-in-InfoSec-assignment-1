@@ -28,17 +28,17 @@ int main( int argc, char* argv[] )
 
     fptr = fopen(ATTRIBUTE_PATH, "r+");
 
-    if(argc == MAX_INPUTS)
-        fputs("", fptr);
-    else{
-        fgets(buf, SHOW_TRANSFER, fptr);
-        accepted = (unsigned int) *buf;
-        dropped = (unsigned int) *(buf + sizeof(unsigned int));
-        printf("Firewall Packets Summary:\n");
-        printf("Number of accepted packets: %d\n", accepted);
-        printf("Number of dropped packets: %d \n", dropped);
-        printf("Total number of packets: %d \n", accepted + dropped);
-    }
+    // if(argc == MAX_INPUTS)
+    //     fputs("", fptr);
+    // else{
+    //     fgets(buf, SHOW_TRANSFER, fptr);
+    //     accepted = (unsigned int) *buf;
+    //     dropped = (unsigned int) *(buf + sizeof(unsigned int));
+    //     printf("Firewall Packets Summary:\n");
+    //     printf("Number of accepted packets: %d\n", accepted);
+    //     printf("Number of dropped packets: %d \n", dropped);
+    //     printf("Total number of packets: %d \n", accepted + dropped);
+    // }
 
-    fclose(fptr);
+    // fclose(fptr);
 }
