@@ -10,7 +10,7 @@
 #define ERROR -1 // Will be returned in case of an error (which could happen only if wrong paarameters were given.)
 #define SUCCES 1 // Will be returned in case the program was executed successfuly.
 
-int main(char** argv, int argc)
+int main( int argc, char *argv[] )
 {
     FILE* fptr;                 // Will be used to interact with the sysfs attribute.
     unsigned int accepted;      // The number of accepted packetes.
