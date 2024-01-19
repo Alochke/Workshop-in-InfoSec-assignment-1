@@ -73,27 +73,27 @@ int sysfs_init(void)
 {
 	int err = 0; // Will be used to store the value returned from device_create_file, so we'll be able to return it in case of an error.
 
-	printk("%s" ,"1");
+	printk("1");
 
 	//create char device
 	ERR_CHECK((major_number = register_chrdev(0, NAME_OF_DEVICE, &fops)) < 0, printk(KERN_ERR "register_chrdev failed."), major_number)
 
-	printk("%s" ,"2");
+	printk("2");
 
 	//create sysfs class
 	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, NAME_OF_CLASS)), cleanup(FIRST); printk(KERN_ERR "class_create failed."), (int) sysfs_class)
 
-	printk("%s" ,"3");
+	printk("3");
 	
 	//create sysfs device
 	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, NAME_OF_CLASS "_" NAME_OF_DEVICE)), cleanup(SECOND); printk(KERN_ERR "device_create failed"), (int) sysfs_device)
 
-	printk("%s" ,"4");
+	printk("4");
 
 	//create sysfs file attributes
 	ERR_CHECK((err = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(THIRD); printk(KERN_ERR "device_create_file failed"), err)
 
-	printk("%s" ,"5");
+	printk("5");
 	
 	return SUCCESS;
 }
