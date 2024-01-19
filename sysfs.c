@@ -99,5 +99,7 @@ int sysfs_init(void)
 */
 void sysfs_exit(void)
 {
+	printk("sysfs accepted: %d\n", accepted);
+	printk("sysfs dropped: %d\n", dropped);
 	cleanup(FOURTH);
 }
