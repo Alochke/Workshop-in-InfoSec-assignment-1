@@ -21,9 +21,6 @@ enum stage{FIRST = 0, SECOND = 1, THIRD = 2, FOURTH =3};
 int sysfs_init(void);
 void sysfs_exit(void);
 
-extern unsigned int accepted;
-extern unsigned int dropped;
-
 /* 
     A safe way to check whether user_buf is user-space memory,
     Sets flag to TRUE on if it is.
