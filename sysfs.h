@@ -8,8 +8,8 @@
 #include <linux/uaccess.h>  /* For put_user Macros. */
 #include "hw2secws.h"
 
-#define NAME_OF_DEVICE "FW_Device"
-#define NAME_OF_CLASS "FW_class"
+#define NAME_OF_DEVICE "fw_Device"
+#define NAME_OF_CLASS "fw_class"
 #define SUCCESS 0
 #define TRUE 1
 #define NUMBER_OF_BYTES_TRANSFERED 2 * sizeof(unsigned int) /* Number of bytes transferd inside the display function in sysfs.c from kernel space to user-space. */
