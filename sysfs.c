@@ -26,6 +26,8 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 	int bool2 = 0;
 	INT_TRANSFER(temp, buf, bool1)
 	INT_TRANSFER(temp, buf + sizeof(unsigned int), bool2)
+	printk("%d\n", bool1);
+	printk("%d\n", bool2);
 	if(bool1 && bool2)
 	{
 		put_user(accepted, (int*) buf);
@@ -99,7 +101,5 @@ int sysfs_init(void)
 */
 void sysfs_exit(void)
 {
-	printk("sysfs accepted: %d\n", accepted);
-	printk("sysfs dropped: %d\n", dropped);
 	cleanup(FOURTH);
 }

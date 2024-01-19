@@ -88,8 +88,6 @@ static void __exit LKM_exit(void)
 {
     sysfs_exit();
     destroy_hooks(HOOKS_NUM);
-    printk("hw2secws accepted: %d\n", accepted);
-	printk("hw2secws dropped: %d\n", dropped);
 }
 
 module_init(LKM_init);
