@@ -15,10 +15,10 @@ int main(char** argv, int argc)
     FILE* fptr;                 // Will be used to interact with the sysfs attribute.
     unsigned int accepted;      // The number of accepted packetes.
     unsigned int dropped;       // The number of dropped packetes.
-    void* buf[SHOW_TRANSFER];   // Will be used to store the data transfered from the module in case no arguments were given to the program.
+    cjar buf[SHOW_TRANSFER];   // Will be used to store the data transfered from the module in case no arguments were given to the program.
 
     // Checking input.
-    if(argc > MAX_INPUTS || ((argc == MAX_INPUTS) && (strcmp(&((const char)CORRECT_INPUT), argv[MAX_INPUTS]) != EQ)))
+    if(argc > MAX_INPUTS || ((argc == MAX_INPUTS) && (strcmp(CORRECT_INPUT, argv[MAX_INPUTS]) != EQ)))
     {
         printf(ERROR_MSG);
         return ERROR;
@@ -27,7 +27,7 @@ int main(char** argv, int argc)
     fptr = fopen(ATTRIBUTE_PATH, "r+");
 
     if(argc = 1)
-        fputs(NULL, fptr);
+        fputs("", fptr);
     else{
         fgets(buf, SHOW_TRANSFER, fptr);
         accepted = (unsigned int) *buf;
