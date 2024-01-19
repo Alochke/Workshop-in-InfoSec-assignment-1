@@ -4,7 +4,8 @@
 
 #define ATTRIBUTE_PATH "/sys/class/fw_class/fw_class_fw_device/sysfs_att"
 #define CORRECT_INPUT "0" // Only correct non-empty input.
-#define ERROR_MSG "Wrong input, you've entered.\n"
+#define INPUT_ERR "Wrong input, you've entered.\n" // The error message in case of wrong input.
+#define PERMISSION_ERR "As a sudo, you must run the program." // The error message in case the program wasn't run with the right permissions.
 #define MAX_INPUTS 2 // Maximal number of parameters to the program, including program name
 #define EQ 0 // The value strcmp returns when the compared strings are equel.
 #define SHOW_TRANSFER 2 * sizeof(unsigned int) // The amount data transfered from the kernel module to a buffer by reading from ATTRIBUTE_PATH.
@@ -22,11 +23,16 @@ int main( int argc, char* argv[] )
     // Checking input.
     if(argc > MAX_INPUTS || ((argc == MAX_INPUTS) && (strcmp(CORRECT_INPUT, argv[CLI_PARAM_IDX]) != EQ)))
     {
-        printf(ERROR_MSG);
+        printf(INPUT_ERR);
         return ERROR;
     }
 
     fptr = fopen(ATTRIBUTE_PATH, "r+");
+    if(fopen == NULL)
+    {
+        printf(PERMISSION_ERR);
+        return ERROR;
+    }
 
     if(argc == MAX_INPUTS)
         fputs("", fptr);
