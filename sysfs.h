@@ -29,7 +29,7 @@ extern unsigned int dropped;
     Sets flag to TRUE on if it is.
 */
 #define INT_TRANSFER(kernel_buf, user_buf, flag)    \
-    if(!put_user(kernel_buf, (int*) (user_buf)))      \
+    if(!put_user(kernel_buf, (int*) (user_buf)))    \
 	{                                               \
 		flag = TRUE;                                \
 	}                                               \

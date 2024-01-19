@@ -84,7 +84,7 @@ static int __init LKM_init(void)
 /* module removal method. */
 static void __exit LKM_exit(void)
 {
-    clean_up(FOURTH);
+    sysfs_exit();
     destroy_hooks(HOOKS_NUM);
 }
 
