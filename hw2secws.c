@@ -75,7 +75,7 @@ static int __init LKM_init(void)
                 hooks[i].hooknum = NF_IP_LOCAL_OUT; /* The only hook point left possible */
             }
         }
-        
+        printk("1");
         ERR_CHECK((err = nf_register_net_hook(&init_net, &hooks[i])) < 0, destroy_hooks(i); printk(KERN_ERR "nf_register_net_hook failed.");, err);
     }
     ERR_CHECK((err = sysfs_init()), destroy_hooks(HOOKS_NUM);, err)
