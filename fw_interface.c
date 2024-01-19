@@ -5,7 +5,7 @@
 #define ATTRIBUTE_PATH "/sys/class/fw_class/fw_class_fw_device/sysfs_att"
 #define CORRECT_INPUT "0" // Only correct non-empty input.
 #define INPUT_ERR "Wrong input, you've entered.\n" // The error message in case of wrong input.
-#define PERMISSION_ERR "As a sudo, you must run the program." // The error message in case the program wasn't run with the right permissions.
+#define PERMISSION_ERR "As a sudo, you must run the program.\n" // The error message in case the program wasn't run with the right permissions.
 #define MAX_INPUTS 2 // Maximal number of parameters to the program, including program name
 #define EQ 0 // The value strcmp returns when the compared strings are equel.
 #define SHOW_TRANSFER 2 * sizeof(unsigned int) // The amount data transfered from the kernel module to a buffer by reading from ATTRIBUTE_PATH.
