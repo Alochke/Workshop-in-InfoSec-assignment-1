@@ -1,7 +1,7 @@
 #include <string.h> // For strcmp.
 #include <stdio.h>  // For reading from and writing to files and for printing.
 
-#define ATTRIBUTE_PATH "/sys/class/fw_class/fw_class_fw_device"
+#define ATTRIBUTE_PATH "/sys/class/fw_class/fw_class_fw_device/sysfs_att"
 #define CORRECT_INPUT "0" // Only correct non-empty input.
 #define ERROR_MSG "Wrong input, you've entered."
 #define MAX_INPUTS 1 // Maximal number of parameters to the program.
@@ -26,7 +26,7 @@ int main(char** argv, int argc)
 
     fptr = fopen(ATTRIBUTE_PATH, "r+");
 
-    if(argc = 1)
+    if(argc == 1)
         fputs("", fptr);
     else{
         fgets(buf, SHOW_TRANSFER, fptr);
