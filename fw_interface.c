@@ -28,7 +28,7 @@ int main( int argc, char* argv[] )
     }
 
     fptr = fopen(ATTRIBUTE_PATH, "r+");
-    if(fopen == NULL)
+    if(fptr == NULL)
     {
         printf(PERMISSION_ERR);
         return ERROR;
