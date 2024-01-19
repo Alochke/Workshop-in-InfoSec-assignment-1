@@ -5,7 +5,7 @@
 #define ATTRIBUTE_PATH "/sys/class/fw_class/fw_class_fw_device/sysfs_att"
 #define CORRECT_INPUT "0" // Only correct non-empty input.
 #define ERROR_MSG "Wrong input, you've entered.\n"
-#define MAX_INPUTS 2 // Maximal number of parameters to the program.
+#define MAX_INPUTS 2 // Maximal number of parameters to the program, including program name
 #define EQ 0 // The value strcmp returns when the compared strings are equel.
 #define SHOW_TRANSFER 2 * sizeof(unsigned int) // The amount data transfered from the kernel module to a buffer by reading from ATTRIBUTE_PATH.
 #define ERROR -1 // Will be returned in case of an error (which could happen only if wrong paarameters were given.)
@@ -28,7 +28,7 @@ int main( int argc, char* argv[] )
 
     fptr = fopen(ATTRIBUTE_PATH, "r+");
 
-    if(argc == 1)
+    if(argc == MAX_INPUTS)
         fputs("", fptr);
     else{
         fgets(buf, SHOW_TRANSFER, fptr);
