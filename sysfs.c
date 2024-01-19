@@ -2,8 +2,6 @@
 
 MODULE_SIGNATURE
 
-
-
 static int major_number;
 static struct class* sysfs_class = NULL;
 static struct device* sysfs_device = NULL;
@@ -12,10 +10,11 @@ static struct file_operations fops = {
 	.owner = THIS_MODULE
 };
 
-
 /*
 	The implementation of show.
-	Puts inside of address- buf the values of accepted and dropped, which are defined in hw2secws.h and then returns the number of bytes written succefuly.
+	Puts inside of address- buf the values of accepted and dropped,
+	which are defined in hw2secws.h and then returns the number of bytes written succefuly.
+	On failure, zeros the values at adresses [buff, buf + 2 * sizeof(unsigned int)).
 */
 ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
@@ -26,9 +25,8 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 	INT_TRANSFER(temp, buf + sizeof(unsigned int), bool2)
 	if(bool1 && bool2)
 	{
-		put_user(accepted, buf);
-		put_user(dropped, buf + sizeof(unsigned int));
-		return NUMBER_OF_BYTES_TRANSFERED;
+		put_user(accepted, (int*) buf);
+		put_user(dropped, (int*) (buf + sizeof(unsigned int)));
 	}
 	return NUMBER_OF_BYTES_TRANSFERED;
 }

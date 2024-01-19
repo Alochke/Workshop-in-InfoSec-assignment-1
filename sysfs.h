@@ -25,8 +25,8 @@ extern unsigned int accepted;
 extern unsigned int dropped;
 
 /* 
-    A safe way to transfer an int from userspace to kernel sapce,
-    Sets flag to TRUE on success.
+    A safe way to check whether user_buf is user-space memory,
+    Sets flag to TRUE on if it is.
 */
 #define INT_TRANSFER(kernel_buf, user_buf, flag)    \
     if(!put_user(kernel_buf, (int*) (user_buf)))      \

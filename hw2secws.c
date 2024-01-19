@@ -29,7 +29,7 @@ static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf
 }
 
 /*
-    Deletes hook with index less than max from existance and frees kernel's allocated memory.
+    Deletes hook with index less than max from existance and frees their kernel allocated memory.
     
     Parameters:
     - max (int): Hooks with indecies in [0,max] will be unregisterred.
