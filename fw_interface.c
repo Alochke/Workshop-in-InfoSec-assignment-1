@@ -1,6 +1,5 @@
 #include <string.h> // For strcmp.
-#include <unistd.h> // For writing.
-#include <errno.h> 
+#include <stdio.h>  // For reading from and writing to files and for printing.
 
 #define ATTRIBUTE_PATH "/sys/class/fw_class/fw_class_fw_device"
 #define CORRECT_INPUT "0" // Only correct non-empty input.
@@ -25,7 +24,7 @@ int main(char** argv, int argc)
         return ERROR;
     }
 
-    fptr = fopen(ATTRIBUTE_PATH, "wr");
+    fptr = fopen(ATTRIBUTE_PATH, "r+");
 
     if(argc = 1)
         fputs(NULL, fptr);
