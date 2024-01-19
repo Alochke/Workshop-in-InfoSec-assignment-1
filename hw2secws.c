@@ -2,9 +2,6 @@
 
 MODULE_SIGNATURE
 
-unsigned int accepted = 0; /* An enumerator for the accepted number of packets. */
-unsigned int dropped = 0;  /* An enumerator for the dropped number of packets. */
-
 /* All nf_hook_ops will be pointed by the hooks pointer, so it'll function as an array (we'll use hooks[i] to refer to hook i.) */
 static struct nf_hook_ops *hooks;
 
