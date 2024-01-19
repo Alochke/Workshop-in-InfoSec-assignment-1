@@ -6,6 +6,9 @@ static int major_number;
 static struct class* sysfs_class = NULL;
 static struct device* sysfs_device = NULL;
 
+extern unsigned int accepted;
+extern unsigned int dropped;
+
 static struct file_operations fops = {
 	.owner = THIS_MODULE
 };
