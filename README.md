@@ -58,4 +58,4 @@ int sysfs_init(void)
 
 void sysfs_exit(void)
     A wrapper function of cleanup, that serves as an abstraction layer of the clean up process of the sysfs part of the module.
-	In case the initialization of that part of the module is done.
+	In case the initialization of that part of the module is done.W
