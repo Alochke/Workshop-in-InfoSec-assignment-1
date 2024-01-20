@@ -21,15 +21,22 @@ static struct file_operations fops = {
 */
 ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
-	unsigned int temp = 0;
-	int bool1 = 0;
-	int bool2 = 0;
-	INT_TRANSFER(temp, buf, bool1)
-	INT_TRANSFER(temp, buf + sizeof(unsigned int), bool2)
-	if(!bool1 && !bool2)
-	{
-		put_user(accepted, (int*) buf);
-		put_user(dropped, (int*) (buf + sizeof(unsigned int)));
+	// unsigned int temp = 0;
+	// int bool1 = 0;
+	// int bool2 = 0;
+	// INT_TRANSFER(temp, buf, bool1)
+	// INT_TRANSFER(temp, buf + sizeof(unsigned int), bool2)
+	// if(!bool1 && !bool2)
+	// {
+	// 	put_user(accepted, (int*) buf);
+	// 	put_user(dropped, (int*) (buf + sizeof(unsigned int)));
+	// }
+	printk("%p", buf);
+	if(acccess_ok(VERIFY_WRITE, buf, 2 * sizeof(sizeof(unsigned int)))){
+		printk("user sapce buffer.");
+	}
+	else{
+		printk("kernel space buffer.");
 	}
 	return NUMBER_OF_BYTES_TRANSFERED;
 }
@@ -82,10 +89,8 @@ int sysfs_init(void)
 	//create sysfs class
 	ERR_CHECK(IS_ERR(sysfs_class = class_create(THIS_MODULE, NAME_OF_CLASS)), cleanup(FIRST); printk(KERN_ERR "class_create failed."), (int) sysfs_class)
 
-	
 	//create sysfs device
 	ERR_CHECK(IS_ERR(sysfs_device = device_create(sysfs_class, NULL, MKDEV(major_number, 0), NULL, NAME_OF_CLASS "_" NAME_OF_DEVICE)), cleanup(SECOND); printk(KERN_ERR "device_create failed"), (int) sysfs_device)
-
 
 	//create sysfs file attributes
 	ERR_CHECK((err = device_create_file(sysfs_device, (const struct device_attribute *)&dev_attr_sysfs_att.attr)), cleanup(THIRD); printk(KERN_ERR "device_create_file failed"), err)
