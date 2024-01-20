@@ -5,7 +5,6 @@
 #include <linux/module.h> /* We're adding a kernel module. */
 #include <linux/fs.h> /* This and the next header are for sysfs kernel api to work. */
 #include <linux/device.h> 
-#include <linux/uaccess.h>  /* For put_user Macros. */
 #include "hw2secws.h"
 
 #define NAME_OF_DEVICE "fw_device"
@@ -20,15 +19,5 @@ enum stage{FIRST = 0, SECOND = 1, THIRD = 2, FOURTH =3};
 
 int sysfs_init(void);
 void sysfs_exit(void);
-
-/* 
-    A safe way to check whether user_buf is user-space memory,
-    Sets flag to TRUE on if it is.
-*/
-#define INT_TRANSFER(kernel_buf, user_buf, flag)    \
-    if(!put_user(kernel_buf, (int*) (user_buf)))    \
-	{                                               \
-		flag = TRUE;                                \
-	}                                               \
 
 #endif

@@ -39,8 +39,7 @@ int main( int argc, char* argv[] )
     if(argc == MAX_INPUTS)
         write(fd, NULL, 0);
     else{
-        printf("%p", buf);
-        read(fd, buf, SHOW_TRANSFER);
+        read(fd, NULL, SHOW_TRANSFER);
         accepted = (unsigned int) *buf;
         dropped = (unsigned int) *(buf + sizeof(unsigned int));
         printf("Firewall Packets Summary:\n");

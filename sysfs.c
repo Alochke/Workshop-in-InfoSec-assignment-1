@@ -21,23 +21,8 @@ static struct file_operations fops = {
 */
 ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
-	// unsigned int temp = 0;
-	// int bool1 = 0;
-	// int bool2 = 0;
-	// INT_TRANSFER(temp, buf, bool1)
-	// INT_TRANSFER(temp, buf + sizeof(unsigned int), bool2)
-	// if(!bool1 && !bool2)
-	// {
-	// 	put_user(accepted, (int*) buf);
-	// 	put_user(dropped, (int*) (buf + sizeof(unsigned int)));
-	// }
-	printk("%p\n", buf);
-	// if(acccess_ok(VERIFY_WRITE, buf, 2 * sizeof(sizeof(unsigned int)))){
-	// 	printk("user sapce buffer.");
-	// }
-	// else{
-	// 	printk("kernel space buffer.");
-	// }
+	int idk = *((int*) buf);
+	// return scnprintf(buf, 2*sizeof(unsigned int), "%u%u\n", accepted, dropped);
 	return NUMBER_OF_BYTES_TRANSFERED;
 }
 
