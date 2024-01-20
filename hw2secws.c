@@ -51,8 +51,6 @@ static int __init LKM_init(void)
 {
     size_t i;   /* for loop's index */
     int err;    /* we'll use that variable at the end of the function definition to save the return value of nf_register_net_hook, in case it'll error and we'll return its return value. */
-    accepted = 0;
-    dropped = 0;
     
     ERR_CHECK((hooks = kmalloc(sizeof(struct nf_hook_ops) * HOOKS_NUM, GFP_KERNEL)) == NULL, printk(KERN_ERR "nf_register_net_hook failed.") , -ENOMEM)
 
