@@ -23,8 +23,8 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	unsigned int *uibuf_accepted = (unsigned int*) buf;
 	unsigned int *uibuf_dropped = (unsigned int*) (buf + sizeof(unsigned int));
-	*uinbuf_accepted = accepted;
-	*uinbuf_dropped = dropped;
+	*uibuf_accepted = accepted;
+	*uibuf_dropped = dropped;
 	return NUMBER_OF_BYTES_TRANSFERED;
 }
 
