@@ -21,8 +21,8 @@ static struct file_operations fops = {
 */
 ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
-	printk("%p%p\n", (void*) accepted, (void*) dropped);
-	return scnprintf(buf, 2*sizeof(unsigned int), "%p%p", (void*) accepted, (void*) dropped);
+	printk("%u%u", accepted, dropped);
+	return scnprintf(buf, 2*sizeof(unsigned int), "0b%u0b%u", (void*) accepted, (void*) dropped);
 	return NUMBER_OF_BYTES_TRANSFERED;
 }
 
