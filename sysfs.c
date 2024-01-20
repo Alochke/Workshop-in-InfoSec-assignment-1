@@ -32,12 +32,12 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 	// 	put_user(dropped, (int*) (buf + sizeof(unsigned int)));
 	// }
 	printk("%p", buf);
-	if(acccess_ok(VERIFY_WRITE, buf, 2 * sizeof(sizeof(unsigned int)))){
-		printk("user sapce buffer.");
-	}
-	else{
-		printk("kernel space buffer.");
-	}
+	// if(acccess_ok(VERIFY_WRITE, buf, 2 * sizeof(sizeof(unsigned int)))){
+	// 	printk("user sapce buffer.");
+	// }
+	// else{
+	// 	printk("kernel space buffer.");
+	// }
 	return NUMBER_OF_BYTES_TRANSFERED;
 }
 
