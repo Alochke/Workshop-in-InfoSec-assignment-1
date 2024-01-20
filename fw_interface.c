@@ -40,9 +40,12 @@ int main( int argc, char* argv[] )
     if(argc == MAX_INPUTS)
         write(fd, NULL, 0);
     else{
-        int i;
-        for(i = 0; i < SHOW_TRANSFER; i++)
-            read(fd, buf + i, MINIMAL_TRANSFER);
+        int to_transfer = SHOW_TRANSFER;
+        int transfered = 0;
+        while(to_transfer != transfered )
+        {
+            transfered += read(fd, buf + transfered, MINIMAL_TRANSFER);
+        }
         accepted = (unsigned int) *buf;
         dropped = (unsigned int) *(buf + sizeof(unsigned int));
         printf("Firewall Packets Summary:\n");
