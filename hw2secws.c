@@ -10,7 +10,9 @@ unsigned int dropped = 0;  /* An enumerator for the dropped number of packets. *
 
 /* 
     The dropped packet handling procedure.
-    This function also increments dropped, which is defined in hw2secws.h.
+    This function also increments the dropped packets counter.
+
+    Returns: NF_DROP which is defined in netfilter.h and makes the handler drop the packet.
 */
 static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
@@ -21,7 +23,9 @@ static unsigned int nf_forward_fn(void* priv, struct sk_buff *skb, const struct 
 
 /* 
     The allowed packet handling procedure.
-    This function also increments accepted, which is defined in hw2secws.h.
+    This function also increments the accepted packet counter.
+
+    Returns: NF_ACCEPT which is defined in netfilter.h and makes the handler accept the packet.
 */
 static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf_hook_ops *state)
 {
@@ -31,12 +35,12 @@ static unsigned int nf_local_fn(void* priv, struct sk_buff *skb, const struct nf
 }
 
 /*
-    Deletes hook with index less than max from existance and frees their kernel allocated memory.
+    Deletes hooks with indecies less than max from existance and frees their kernel allocated memory.
     
     Parameters:
-    - max (int): Hooks with indecies in [0,max] will be unregisterred.
+    - max (size_t): Hooks with indecies in [0,max] will be unregisterred.
 */
-static void destroy_hooks(int max)
+static void destroy_hooks(size_t max)
 {
     size_t i;   /* for loop's index */
     for (i = 0; i < max; i++)
@@ -46,7 +50,11 @@ static void destroy_hooks(int max)
     kfree(hooks);
 }
 
-/* The module initialization function. */
+/*
+    The module initialization function.
+    
+    Returns: -ENOMEM in case it was not able to allocate memory for the nf_hook_ops structs, 0 on success and the value returned by the function that failed in any case a function called by LKM _init failed.
+*/
 static int __init LKM_init(void)
 {
     size_t i;   /* for loop's index */

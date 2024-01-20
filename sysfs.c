@@ -6,9 +6,6 @@ static int major_number;
 static struct class* sysfs_class = NULL;
 static struct device* sysfs_device = NULL;
 
-extern unsigned int accepted;
-extern unsigned int dropped;
-
 static struct file_operations fops = {
 	.owner = THIS_MODULE
 };
@@ -17,7 +14,8 @@ static struct file_operations fops = {
 	The implementation of show.
 	Puts inside of address- buf the values of accepted and dropped,
 	which are defined in hw2secws.h and then returns the number of bytes written succefuly.
-	On failure, zeros the values at adresses [buff, buf + 2 * sizeof(unsigned int)).
+
+	Returns: The number of bytes transfered.
 */
 ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
@@ -26,27 +24,30 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 
 	/* 
 		I intentionally write manually into the buffer. A research I have conducted showed that buf is within the kernel space allocated by the sysfs API and therefore this is totaly ok.
-		Source: https://docs.kernel.org/filesystems/sysfs.html
+		Sources: https://docs.kernel.org/filesystems/sysfs.html Also, the fact that the address of buf is diffrent than the address of a buffer given to a write system call that writes to
+		the sysfs attribute and the fact that put_user fails to transfer data to buf.
 		Also, becuase I want to transfer the actual values of accepted and dropped to the buffer,
-		using a transferring fuctions that uses string formatting would make thins unnecessarily complex.
+		using a transferring fuctions that uses string formatting would make things unnecessarily complex.
 	*/
 	*uibuf_accepted = accepted;
 	*uibuf_dropped = dropped;
-	return NUMBER_OF_BYTES_TRANSFERED;
+	return SHOW_BYTES;
 }
 
 /*
 	The implementation of store.
 	Zeros accepted and dropped which are defined in hw2secws.h.
+
+	Returns: 0, i.e, the bytes from the sysfs buffer modified, according to standard practice with the sysfs api.
 */
 ssize_t modify(struct device *dev, struct device_attribute *attr, const char *buf, size_t count){
 	accepted = 0;
 	dropped = 0;
-	return 0;
+	return STORE_BYTES;
 }
 
 // Links the device with display as show and modify as store (both funtions defined in sysfs.c), in a sysfs manner.
-static DEVICE_ATTR(sysfs_att, S_IWUSR | S_IRUSR , display, modify);
+static DEVICE_ATTR(sysfs_att, S_IWUSR | S_IRUSR, display, modify);
 
 /*
 	Cleans the sysfs part of the module.

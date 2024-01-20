@@ -23,7 +23,6 @@
 #define NF_IP_LOCAL_IN          1 /* If the packet is destined for this box. */
 #define NF_IP_FORWARD           2 /* If the packet is destined for another interface. */
 #define NF_IP_LOCAL_OUT         3 /* Packets coming from a local process. */
-#define NUMBER_OF_ENUMARATORS   2 /* Refers to accepted and dropped which are declared in hw2secws.h. */
 
 extern unsigned int accepted; /* A counter for the accepted number of packets. */
 extern unsigned int dropped;  /* A counter for the dropped number of packets. */
@@ -33,11 +32,11 @@ extern unsigned int dropped;  /* A counter for the dropped number of packets. */
     MODULE_AUTHOR("Alon Polsky");                                                       \
     MODULE_DESCRIPTION("HW2 solution for the course Workshop in Information Security.");\
 
-#define ERR_CHECK(condition, extra_code, errno_value){          \
-    if(condition){                                              \
-        extra_code;                                             \
-        return errno_value;                                     \
-    }                                                           \
+#define ERR_CHECK(condition, extra_code, errno_value){  \
+    if(condition){                                      \
+        extra_code;                                     \
+        return errno_value;                             \
+    }                                                   \
 }
 
 #endif

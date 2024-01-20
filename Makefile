@@ -1,6 +1,6 @@
 obj-m += fw.o
 
-#append other source files except hw2secws.c which would be include by default
+# Object files needed for linkage of the module.
 fw-y := hw2secws.o sysfs.o
 
 all:
