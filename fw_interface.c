@@ -14,6 +14,7 @@
 #define ERROR -1 // Will be returned in case of an error.
 #define SUCCESS 0 // Will be returned in case the program was executed successfuly.
 #define PARAM_IDX 1 // The index in argv of the only parameter given to the command line when one was given.
+#define MINIMAL_STORE 1 // The minimal amount of bytes we need to write into a sysfs attribute in order for the store function to take action.
 
 // The next 4 lines are the output message lines in case no arguments were given to the program.
 
@@ -44,7 +45,7 @@ int main(int argc, char* argv[])
     }
 
     if(argc == MAX_ARGC)
-        write(fd, buf, 0);
+        write(fd, buf, MINIMAL_STORE); // Apparently we have to write something into the attribute in order for the show function to take action.
     else{
         int transfered = 0;
         while(SHOW_TRANSFER != transfered)
