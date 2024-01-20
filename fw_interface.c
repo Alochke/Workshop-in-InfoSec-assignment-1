@@ -42,10 +42,10 @@ int main( int argc, char* argv[] )
     else{
         int to_transfer = SHOW_TRANSFER;
         int transfered = 0;
-        while(to_transfer != transfered )
+        while(to_transfer != transfered)
         {
             transfered += read(fd, buf + transfered, MINIMAL_TRANSFER);
-            printf("%d\n", transfered);
+            fprintf(1, "\n%p%p", (void*) buf, (void*)(buf + sizeof(unsigned int)));
         }
         accepted = (unsigned int) *buf;
         dropped = (unsigned int) *(buf + sizeof(unsigned int));
