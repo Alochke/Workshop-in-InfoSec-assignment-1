@@ -80,7 +80,7 @@ static int __init LKM_init(void)
         ERR_CHECK((err = nf_register_net_hook(&init_net, &hooks[i])) < 0, destroy_hooks(i); printk(KERN_ERR "nf_register_net_hook failed.");, err);
     }
     ERR_CHECK((err = sysfs_init()), destroy_hooks(HOOKS_NUM);, err)
-    return 0;
+    return SUCCESS;
 }
 
 /* module removal method. */

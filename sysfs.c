@@ -23,6 +23,13 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	unsigned int *uibuf_accepted = (unsigned int*) buf;
 	unsigned int *uibuf_dropped = (unsigned int*) (buf + sizeof(unsigned int));
+
+	/* 
+		I intentionally write manually into the buffer. A research I have conducted showed that buf is within the kernel space allocated by the sysfs API and therefore this is totaly ok.
+		Source: https://docs.kernel.org/filesystems/sysfs.html
+		Also, becuase I want to transfer the actual values of accepted and dropped to the buffer,
+		using a transferring fuctions that uses string formatting would make thins unnecessarily complex.
+	*/
 	*uibuf_accepted = accepted;
 	*uibuf_dropped = dropped;
 	return NUMBER_OF_BYTES_TRANSFERED;
