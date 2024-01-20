@@ -35,7 +35,7 @@ int main( int argc, char* argv[] )
     }
 
     if(argc == MAX_INPUTS)
-        fputs(NULL, fptr);
+        fputs("", fptr);
     else{
         fgets(buf,  SHOW_TRANSFER, fptr);
         accepted = (unsigned int) *buf;
