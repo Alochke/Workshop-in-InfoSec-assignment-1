@@ -51,5 +51,5 @@ int main( int argc, char* argv[] )
         printf("Total number of packets: %d \n", accepted + dropped);
     }
 
-    fclose(fptr);
+    close(fd);
 }
