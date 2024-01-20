@@ -40,7 +40,6 @@ ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
 	Zeros accepted and dropped which are defined in hw2secws.h.
 */
 ssize_t modify(struct device *dev, struct device_attribute *attr, const char *buf, size_t count){
-	printk("check");
 	accepted = 0;
 	dropped = 0;
 	return 0;
