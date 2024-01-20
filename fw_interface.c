@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     }
 
     if(argc == MAX_ARGC)
-        write(fd, buf, 1);
+        write(fd, buf, 0);
     else{
         int transfered = 0;
         while(SHOW_TRANSFER != transfered)
